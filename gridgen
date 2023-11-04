@@ -1,0 +1,81 @@
+import pygame
+import sys
+
+# Initialize Pygame
+pygame.init()
+
+# Constants
+WIDTH, HEIGHT = 600, 600
+CELL_SIZE = 30
+GRID_WIDTH, GRID_HEIGHT = WIDTH // CELL_SIZE, HEIGHT // CELL_SIZE
+
+# Colors
+BLUE = (0, 0, 255)
+RED = (255, 0, 0)
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+
+# Set up the display
+window = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Color Grid")
+
+# Function to draw the grid
+def draw_grid():
+    for x in range(0, WIDTH, CELL_SIZE):
+        for y in range(0, HEIGHT, CELL_SIZE):
+            rect = pygame.Rect(x, y, CELL_SIZE, CELL_SIZE)
+            pygame.draw.rect(window, WHITE, rect, 1)
+
+
+
+# Initialize grid with empty colors
+grid = [[WHITE for _ in range(GRID_WIDTH)] for _ in range(GRID_HEIGHT)]
+
+# Function to color a cell in the grid
+def color_cell(pos, color):
+    x, y = pos
+    grid_x, grid_y = x // CELL_SIZE, y // CELL_SIZE
+    if grid[grid_y][grid_x] == WHITE:
+        
+        grid[grid_y][grid_x] = color
+        rect = pygame.Rect(grid_x * CELL_SIZE, grid_y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+        pygame.draw.rect(window, color, rect)
+        pygame.display.flip()
+        return True
+    else:
+        return False
+
+# Main game loop
+running = True
+click_count = 0
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN and click_count < 20:
+            mouse_pos = event.pos
+            color = BLUE if click_count < 10 else RED
+            if color_cell(mouse_pos, color):
+                click_count += 1
+    
+    # Fill the background
+    window.fill(BLACK)
+    
+    # Draw the grid
+    draw_grid()
+    
+    # Draw the colored cells
+    for y in range(GRID_HEIGHT):
+        for x in range(GRID_WIDTH):
+            rect = pygame.Rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+            pygame.draw.rect(window, grid[y][x], rect)
+    
+    # Update the display
+    pygame.display.flip()
+    
+    # Cap the frame rate
+    pygame.time.Clock().tick(60)
+
+# Clean up Pygame
+pygame.quit()
+sys.exit()
