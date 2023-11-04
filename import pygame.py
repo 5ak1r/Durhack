@@ -13,16 +13,20 @@ GRID_WIDTH, GRID_HEIGHT = WIDTH // CELL_SIZE, HEIGHT // CELL_SIZE
 # Colors
 WHITE = (0, 255, 255)
 BLACK = (0, 0, 0)
+BLUE = (0, 0, 255)
+RED = (255, 0, 0)
 
 # Set up the display
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Conway's Game of Life")
 
+#Function to draw the grid
 def draw_grid():
     for x in range(0, WIDTH, CELL_SIZE):
-        pygame.draw.line(window, WHITE, (x, 0), (x, HEIGHT))
-    for y in range(0, HEIGHT, CELL_SIZE):
-        pygame.draw.line(window, WHITE, (0, y), (WIDTH, y))
+        for y in range(0, HEIGHT, CELL_SIZE):
+            rect = pygame.Rect(x, y, CELL_SIZE, CELL_SIZE)
+            pygame.draw.rect(window, WHITE, rect, 1)
+
 
 def draw_cells(grid):
     for y in range(GRID_HEIGHT):
@@ -32,7 +36,34 @@ def draw_cells(grid):
                 pygame.draw.rect(window, WHITE, rect)
             else:
                 pygame.draw.rect(window, BLACK, rect)
+# Function to color a cell in the grid
+def color_cell(pos, color):
+    x, y = pos
+    grid_x, grid_y = x // CELL_SIZE, y // CELL_SIZE
+    if grid[grid_y][grid_x] == WHITE:
+        
+        grid[grid_y][grid_x] = color
+        rect = pygame.Rect(grid_x * CELL_SIZE, grid_y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+        pygame.draw.rect(window, color, rect)
+        pygame.display.flip()
+        return True
+    else:
+        return False
 
+# Main game loop
+running = True
+click_count = 0
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN and click_count < 20:
+            mouse_pos = event.pos
+            color = BLUE if click_count < 10 else RED
+            if color_cell(mouse_pos, color):
+                click_count += 1
+
+                
 def update_grid(grid):
     new_grid = grid.copy()
     for y in range(GRID_HEIGHT):

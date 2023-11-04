@@ -62,7 +62,7 @@ while running:
     window.fill(BLACK)
     
     # Draw the grid
-    draw_grid()
+    draw_grid() 
     
     # Draw the colored cells
     for y in range(GRID_HEIGHT):

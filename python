@@ -1,0 +1,30 @@
+import pygame
+
+# Initialize Pygame
+pygame.init()
+
+# Create a display surface
+window = pygame.display.set_mode((800, 600))
+
+# Define a rectangle at position (100, 100) with a size of 50x50 pixels
+my_rect = pygame.Rect(100, 100, 50, 50)
+
+# Game loop
+running = True
+while running:
+    # Check for events
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Fill the screen with a color
+    window.fill((0, 0, 0))
+
+    # Draw the rectangle on the surface
+    pygame.draw.rect(window, (255, 0, 0), my_rect)
+
+    # Update the display
+    pygame.display.flip()
+
+# Quit Pygame
+pygame.quit()
