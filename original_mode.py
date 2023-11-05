@@ -55,6 +55,19 @@ def game_over_display(evolution, new_grid):
             if event.type == pygame.QUIT:
                 return
 
+return_button1 = pygame.Rect(30, 30, 20, 20)
+def return_button(return_button1):
+    pygame.draw.rect(screen, (0, 0, 0), return_button1)
+
+    # Draw return button
+
+    # Draw return button text
+    font = pygame.font.Font(None, 14)# Font
+    return_text = font.render("Home", True, (255, 255, 255))
+    screen.blit(return_text, (return_button1.x, return_button1.y + 1))
+
+    # Update the display
+    pygame.display.flip()
 
 def original_game():
     # Initialize Pygame
@@ -83,6 +96,12 @@ def original_game():
             if event.type == pygame.QUIT:
                 running = False
 
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Left mouse button
+                return_button1 = pygame.Rect(30, 30, 20, 20)
+                if return_button1.collidepoint(event.pos):
+                    print('trigger!!!')
+                    return
+
         # Update the grid
         new_grid = update_grid_original(grid)
         evolution+=1 # for result counting 
@@ -93,10 +112,12 @@ def original_game():
         grid = new_grid
         # Render the game
         screen.fill(BLACK)  # Fill the screen with black
+        ###
         draw_cells(grid)
 
         ## check if the status
-
+        return_button1 = pygame.Rect(30, 30, 20, 20)
+        return_button(return_button1)
         # Update the display
         pygame.display.flip()
         # pygame.time.delay(300) # param here, can be altered

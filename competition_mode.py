@@ -98,6 +98,19 @@ def game_over_display(winner):
             if event.type == pygame.QUIT:
                 return
 
+return_button1 = pygame.Rect(30, 30, 20, 20)
+def return_button(return_button1):
+    pygame.draw.rect(screen, (0, 0, 0), return_button1)
+
+    # Draw return button
+
+    # Draw return button text
+    font = pygame.font.Font(None, 12)
+    return_text = font.render("Home", True, (255, 255, 255))
+    screen.blit(return_text, (return_button1.x, return_button1.y + 1))
+
+    # Update the display
+    pygame.display.flip()
 
 def competition_game():
     # Initialize Pygame
@@ -123,6 +136,12 @@ def competition_game():
             if event.type == pygame.QUIT:
                 running = False #stops running when user quits the program
 
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Left mouse button
+                return_button1 = pygame.Rect(30, 30, 20, 20)
+                if return_button1.collidepoint(event.pos):
+                    print('trigger!!!')
+                    return
+
             if event.type == pygame.MOUSEBUTTONDOWN and not simulation_started: #when the user is still clicking (first 20 clicks to assign colours)
                 mouseX, mouseY = pygame.mouse.get_pos()
                 gridX, gridY = mouseX // cell_size, mouseY // cell_size
@@ -144,6 +163,8 @@ def competition_game():
         # Start simulation after 20 clicks
         if simulation_started:
             update_grid()
+        return_button1 = pygame.Rect(30, 30, 20, 20)
+        return_button(return_button1)
 
         pygame.display.flip()
         if simulation_started == True: 
