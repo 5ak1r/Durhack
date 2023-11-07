@@ -1,0 +1,12 @@
+# Colors
+WHITE = (0, 255, 255)
+BLACK = (0, 0, 0)
+BLUE = (0, 0, 255)
+RED = (255, 0, 0)
+
+# Cell size and grid
+CELL_SIZE = 3
+
+WIDTH, HEIGHT = 640, 480 # 400, 800
+
+GRID_WIDTH, GRID_HEIGHT = WIDTH // CELL_SIZE, HEIGHT // CELL_SIZE
