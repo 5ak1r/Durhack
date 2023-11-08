@@ -1,4 +1,4 @@
-# Durhack
+# The Pixel Petri Dish
 
 To run this game, download a ZIP file of all contents and run Main.py. This should launch the PYGAME GUI.
 
